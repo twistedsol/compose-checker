@@ -1,0 +1,25 @@
+# Made-up example: looks fine but leaves gaps.
+services:
+  app:
+    image: example/app:2.3.1
+    environment:
+      - API_TOKEN=${API_TOKEN}
+      - LOG_LEVEL=info
+    ports:
+      - "8080:8080"
+    volumes:
+      - app-data:/data
+      - /etc/localtime:/etc/localtime:ro
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    ports:
+      - "5432:5432"
+    user: "999:999"
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  app-data:
