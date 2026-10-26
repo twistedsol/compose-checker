@@ -74,3 +74,5 @@ I used AI to help write the code and tests. The reader is a small one I wrote fo
 - Read the `.env` file and override files too.
 - Check `read_only`, `cap_drop` and resource limits.
 - A Kubernetes manifest checker with the same pattern.
+
+- 
