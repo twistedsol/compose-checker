@@ -61,7 +61,14 @@ python -m unittest -v
 
 I used AI to help write the code and tests. The reader is a small one I wrote for this tool, because the standard library has no YAML support and I wanted no installs. I ran everything myself and checked the sample results by hand.
 
-## Limits
+## What I learned
+
+- Compose files are a common place for risky settings: a privileged container or a mounted Docker socket gives a container control over the whole host.
+- Mounting `docker.sock` is dangerous even when it is read-only, so the tool flags it either way.
+- There is no YAML reader in Python's standard library, so I wrote a small one. That made me understand how indentation and lists really work, and I made the tool stop with an error on anchors instead of guessing.
+- Some checks are only hints. A file cannot tell if an image already runs as a non-root user, so I worded those findings honestly.
+-
+- ## Limits
 
 - It reads one file. It does not merge `docker-compose.override.yml`, `include:` files or `.env` files.
 - It does not support YAML anchors, merge keys (`<<`) or multi-document files. It stops with an error instead of guessing.
