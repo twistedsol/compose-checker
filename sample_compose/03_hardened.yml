@@ -1,0 +1,29 @@
+# Made-up example: a hardened compose file.
+services:
+  app:
+    image: example/app:2.3.1@sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+    user: "10001:10001"
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      - API_TOKEN=${API_TOKEN}
+    ports:
+      - "127.0.0.1:8080:8080"
+
+  db:
+    image: postgres:16.4
+    user: "999:999"
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
