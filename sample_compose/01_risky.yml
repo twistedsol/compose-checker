@@ -1,0 +1,32 @@
+# Made-up example: a badly written compose file.
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    privileged: true
+    network_mode: host
+
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: hunter2
+      MYSQL_DATABASE: shop
+    ports:
+      - "3306:3306"
+
+  cache:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  agent:
+    image: example/agent:1.4
+    pid: host
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc:/host-etc
